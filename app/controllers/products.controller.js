@@ -70,20 +70,29 @@ class ProductsController extends BaseController {
         "currency": data.currency_id,
         "amount": Math.trunc(data.price),
         "decimals": data.price.toFixed(2).replace('.', '').replace(Math.trunc(data.price), '')
-      }
+      },
+      "picture": data.thumbnail,
+      "condition": data.condition,
+      "free_shipping": data.shipping.free_shipping,
+      "sold_quantity": data.sold_quantity,
     },
-    "picture": data.thumbnail,
-    "condition": data.condition,
-    "free_shipping": data.shipping.free_shipping,
-    "sold_quantity": data.sold_quantity,
-    "description": data.description
-  })
+  });
 
   searchForId = async (req, res, next) => {
     try {
       const response = await fetch(`https://api.mercadolibre.com/items/${req.params.id}`);
       const data = await response.json();
-      res.json([data].map(this.itemModel));
+      
+      const responseDescription = await fetch(`https://api.mercadolibre.com/items/${req.params.id}/descriptions`);
+      const dataDescription = await responseDescription.json();
+
+      const itemData = [data].map(this.itemModel);
+
+      if (itemData[0]) {
+        itemData[0].item.description = dataDescription[0] ? dataDescription[0].text : '';
+      }
+
+      res.json(itemData);
     } catch(err) {
       next(err);
     }
