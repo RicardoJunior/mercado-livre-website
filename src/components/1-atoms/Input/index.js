@@ -19,6 +19,8 @@ const styles = css`
   margin: 0;
   box-sizing: border-box;
   border-radius: 2px;
+  border: 1px solid #ccc;
+  padding: 5px 60px 5px 15px;
 
   &[type=checkbox], &[type=radio] {
     display: inline-block;
@@ -27,6 +29,12 @@ const styles = css`
     width: auto;
     height: auto;
     margin: 0 0.2rem 0 0;
+  }
+
+  &:focus {
+    border-color: #303577;
+    box-shadow: none;
+    outline: none;
   }
 `;
 
@@ -40,7 +48,7 @@ const Input = ({ ...props }) => {
   } else if (props.type === 'select') {
     return <StyledSelect {...props} />;
   }
-  return <StyledInput {...props} />;
+  return <StyledInput {...props} autoComplete="off" />;
 };
 
 Input.propTypes = {
