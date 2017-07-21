@@ -1,6 +1,6 @@
-import { reversePalette } from 'styled-theme/composer'
+import { reversePalette } from 'styled-theme/composer';
 
-const theme = {}
+const theme = {};
 
 theme.palette = {
   primary: ['#1976d2', '#2196f3', '#71bcf7', '#c2e2fb'],
@@ -19,18 +19,18 @@ theme.palette = {
     '#eeeeee',
     '#ffffff',
   ],
-}
+};
 
-theme.reversePalette = reversePalette(theme.palette)
+theme.reversePalette = reversePalette(theme.palette);
 
 theme.fonts = {
   primary: 'Helvetica Neue, Helvetica, Roboto, sans-serif',
   pre: 'Consolas, Liberation Mono, Menlo, Courier, monospace',
   quote: 'Georgia, serif',
-}
+};
 
 theme.sizes = {
   maxWidth: '1100px',
-}
+};
 
-export default theme
+export default theme;
