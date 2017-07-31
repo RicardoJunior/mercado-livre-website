@@ -4,7 +4,10 @@ import PropTypes from 'prop-types';
 const Form = ({ onSubmit, data, ...props }) => {
   const submitForm = (event) => {
     event.preventDefault();
-    return onSubmit(data);
+
+    if (onSubmit) {
+      onSubmit(data);
+    }
   };
 
   return (
@@ -13,7 +16,7 @@ const Form = ({ onSubmit, data, ...props }) => {
 };
 
 Form.propTypes = {
-  onSubmit: PropTypes.func,
+  onSubmit: PropTypes.func.isRequired,
   data: PropTypes.object.isRequired,
 };
 
