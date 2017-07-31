@@ -4,21 +4,57 @@ import styled from 'styled-components';
 
 import { Figure, Heading, Paragraph } from 'components';
 
-const Article = styled.article``;
+const Article = styled.article`
+  background-color: #fff;
+  border-radius: 3px;
+  margin: 0 auto;
+  padding 20px;
+  max-width: 1220px;
+  border-bottom: 1px solid #eee;
+  display: flex;
 
-const Product = ({ id, title, image, value, cityFrom, ...props }) => {
+  .image {
+    width: 200px;
+    height: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  figcaption {
+    display: none;
+  }
+
+  .productInfo a {
+    text-decoration: none;
+    cursor: pointer;
+    color: #333;
+    font-size: 20px;
+    font-family: "Proxima Nova",Helvetica,Arial,sans-serif;
+  }
+
+  .productInfo p {
+    color: #000;
+    font-size: 24px;
+    font-family: "Proxima Nova",Helvetica,Arial,sans-serif;
+  }
+`;
+
+const Product = ({ id, title, picture, value, cityFrom, ...props }) => {
   return (
     <Article {...props} itemscope itemtype="http://schema.org/Product">
       <div className="image">
-        <a href="/items/{id}/{title}" title={title} itemProp="url">
-          <Figure src={image} title={title} itemProp="image" />
+        <a href={'/items/' + id + '/' + title} title={title} itemProp="url">
+          <Figure src={picture} title={title} itemProp="image" />
         </a>
       </div>
       <div className="productInfo">
         <div itemScope itemType="http://schema.org/Offer">
           <Paragraph itemProp="price">{value}</Paragraph>
         </div>
-        <Heading itemProp="name">{title}</Heading>
+        <a href={'/items/' + id + '/' + title} title={title} itemProp="url">
+          {title}
+        </a>
       </div>
       <div className="from">
         <div itemScope itemType="http://schema.org/Offer">
@@ -32,9 +68,9 @@ const Product = ({ id, title, image, value, cityFrom, ...props }) => {
 Product.propTypes = {
   id: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,
-  image: PropTypes.string.isRequired,
-  value: PropTypes.number.isRequired,
-  cityFrom: PropTypes.string.isRequired,
+  picture: PropTypes.string.isRequired,
+  value: PropTypes.string.isRequired,
+  cityFrom: PropTypes.string,
 };
 
 export default Product;
