@@ -1,28 +1,48 @@
 import React from 'react';
+import styled from 'styled-components';
 import PropTypes from 'prop-types';
 
 import { Product } from 'components';
 
-const ProductList = ({ products }) => {
-  return (
-    <section>
-      {
-        products ? (
-          products.map((product) => {
-            return (<Product key={product.id} {...product} />);
-          })
-        ) : (
-          <div>
-            Sem produtos a serem exibidos!
-          </div>
-        )
-      }
-    </section>
-  );
-};
+const StyledSection = styled.section`
+  box-sizing: border-box;
+  padding: 20px;
+  width: 100%;
+  margin: 0;
+`;
 
-ProductList.propTypes = {
-  products: PropTypes.array,
-};
+export default class ProductList extends React.Component {
+  static propTypes = {
+    products: PropTypes.array,
+    loading: PropTypes.bool,
+  };
 
-export default ProductList;
+  getContent() {
+    if (this.props.loading) {
+      return (
+        <div>
+          Carregando...
+        </div>
+      );
+    }
+
+    return (this.props.products ? (
+      this.props.products.map((product) => {
+        const value = `$ ${product.price.amount}${(product.price.decimals ? `.${product.price.decimals}` : '')}`;
+        return (<Product key={product.id} {...product} value={value} />);
+      })
+    ) : (
+      <div>
+        Sua busca não retornou resultados!
+      </div>
+    ));
+  }
+
+  render() {
+    return (
+      <StyledSection>
+        {this.getContent(this.props)}
+      </StyledSection>
+    );
+  }
+}
