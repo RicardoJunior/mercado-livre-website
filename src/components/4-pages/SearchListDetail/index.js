@@ -89,6 +89,8 @@ export default class HomePage extends React.Component {
       picture: '',
       sold_quantity: '',
     };
+
+    this.onSubmit = this.onSubmitVirtual.bind(this);
   }
 
   componentDidMount() {
@@ -100,9 +102,34 @@ export default class HomePage extends React.Component {
       });
   }
 
+  onSubmitVirtual(data) {
+    this.state = {
+      author: {
+        name: '',
+        lastname: '',
+      },
+      condition: '',
+      free_shipping: '',
+      item: {
+        id: '',
+        title: '',
+        description: '',
+        price: {
+          amount: 0,
+          currency: '',
+          decimals: '',
+        },
+      },
+      picture: '',
+      sold_quantity: '',
+    };
+
+    this.props.history.push(`/items?search=${data.searchValue}`);
+  }
+
   render() {
     return (<div>
-      <Header />
+      <Header onSubmit={this.onSubmit} />
       <StyledSection>
         <article>
           <header>
@@ -116,7 +143,7 @@ export default class HomePage extends React.Component {
             </div>
           </header>
           <footer>
-            <Heading level="2">Descrípción del producto</Heading>
+            <Heading level={2}>Descrípción del producto</Heading>
             <Paragraph itemProp="description" dangerouslySetInnerHTML={{ __html: this.state.item.description }} />
           </footer>
         </article>

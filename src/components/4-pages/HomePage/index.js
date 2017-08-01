@@ -20,6 +20,14 @@ export default class HomePage extends React.Component {
     this.onSubmit = this.onSubmitVirtual.bind(this);
   }
 
+  componentDidMount() {
+    if (this.props.location.search) {
+      this.setState({
+        searchValue: (this.props.location.search).replace('?search=', ''),
+      });
+    }
+  }
+
   componentDidUpdate(prevProps, prevState) {
     if (this.state.searchValue !== prevState.searchValue) {
       this.setState({
