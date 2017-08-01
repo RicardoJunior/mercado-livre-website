@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { Header, Figure, Paragraph, Button, Heading } from 'components';
 import axios from 'axios';
+import loader from './loader.svg';
 
 const StyledSection = styled.section`
   max-width: 1220px;
@@ -54,6 +55,10 @@ const StyledSection = styled.section`
     cursor: pointer;
     margin-top: 20px;
   }
+
+  .loader {
+    text-align: center;
+  }
 `;
 
 export default class HomePage extends React.Component {
@@ -70,6 +75,7 @@ export default class HomePage extends React.Component {
     super(props);
 
     this.state = {
+      loading: true,
       author: {
         name: '',
         lastname: '',
@@ -97,6 +103,7 @@ export default class HomePage extends React.Component {
     axios.get(`http://localhost:4567/api/items/${this.props.match.params.id}`)
       .then((response) => {
         if (response.data && response.data.length === 1) {
+          response.data[0].loading = false;
           this.setState(response.data[0]);
         }
       });
@@ -127,26 +134,38 @@ export default class HomePage extends React.Component {
     this.props.history.push(`/items?search=${data.searchValue}`);
   }
 
+  getContent() {
+    if (this.state.loading) {
+      return (
+        <div className="loader">
+          <img alt="Carregando" src={loader} />
+        </div>
+      );
+    }
+
+    return (<article>
+      <header>
+        <Figure src={this.state.item.picture} title={this.state.item.title} itemProp="image" />
+        <div className="productData">
+          <div itemScope itemType="http://schema.org/Offer">
+            <Paragraph className="productName" itemProp="name">{this.state.item.title}</Paragraph>
+            <Paragraph className="productPrice" itemProp="price">{`$ ${this.state.item.price.amount}${(this.state.item.price.decimals ? `.${this.state.item.price.decimals}` : '')}`}</Paragraph>
+          </div>
+          <Button type="button" value="Comprar">Comprar</Button>
+        </div>
+      </header>
+      <footer>
+        <Heading level={2}>Descrípción del producto</Heading>
+        <Paragraph itemProp="description" dangerouslySetInnerHTML={{ __html: this.state.item.description }} />
+      </footer>
+    </article>);
+  }
+
   render() {
     return (<div>
       <Header onSubmit={this.onSubmit} />
       <StyledSection>
-        <article>
-          <header>
-            <Figure src={this.state.item.picture} title={this.state.item.title} itemProp="image" />
-            <div className="productData">
-              <div itemScope itemType="http://schema.org/Offer">
-                <Paragraph className="productName" itemProp="name">{this.state.item.title}</Paragraph>
-                <Paragraph className="productPrice" itemProp="price">{`$ ${this.state.item.price.amount}${(this.state.item.price.decimals ? `.${this.state.item.price.decimals}` : '')}`}</Paragraph>
-              </div>
-              <Button type="button" value="Comprar">Comprar</Button>
-            </div>
-          </header>
-          <footer>
-            <Heading level={2}>Descrípción del producto</Heading>
-            <Paragraph itemProp="description" dangerouslySetInnerHTML={{ __html: this.state.item.description }} />
-          </footer>
-        </article>
+        {this.getContent()}
       </StyledSection>
     </div>);
   }
