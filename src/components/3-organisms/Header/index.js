@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import React from 'react';
 import { Figure, Form, Input, Button } from 'components';
 import PropTypes from 'prop-types';
+import searchIcon from './searchIcon.svg';
 
 const StyledHeader = styled.header`
   background-color: #fff059;
@@ -31,13 +32,17 @@ const StyledHeader = styled.header`
     width: calc(100% - 50px);
   }
 
+  input {
+    margin-right: -1px;
+    z-index: 10;
+  }
+
   button {
     width: 46px;
     height: 40px;
     border: 1px solid #ccc;
     background-color: #fff;
     background-image: linear-gradient(#fff,#f1f1f1);
-    margin-left: -1px;
   }
 `;
 
@@ -55,7 +60,9 @@ const Header = ({ onSubmit }) => {
       <Figure src="https://http2.mlstatic.com/ui/navigation/2.0.8/mercadolibre/logo__small.png" title="Mercado Livre" />
       <Form onSubmit={onSubmit} data={data}>
         <Input name="search" onChange={onChange} placeholder="Nunca dejes de buscar" />
-        <Button type="submit" value="Submit" />
+        <Button type="submit" value="Submit">
+          <img src={searchIcon} alt="Buscar" width="16" />
+        </Button>
       </Form>
     </StyledHeader>
   );

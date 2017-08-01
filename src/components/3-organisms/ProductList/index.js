@@ -21,6 +21,7 @@ const StyledSection = styled.section`
     border: 1px solid #eee;
     color: #303577;
     border-radius: 4px;
+    font-family: Proxima Nova,-apple-system,Helvetica Neue,Helvetica,Roboto,Arial,sans-serif;
   }
 `;
 
@@ -28,6 +29,7 @@ export default class ProductList extends React.Component {
   static propTypes = {
     products: PropTypes.array,
     loading: PropTypes.bool,
+    isEmpty: PropTypes.bool,
   };
 
   getContent() {
@@ -39,7 +41,7 @@ export default class ProductList extends React.Component {
       );
     }
 
-    return (this.props.products && this.props.products.length !== 0 ? (
+    return ((this.props.products && this.props.products.length !== 0) || this.props.isEmpty ? (
       this.props.products.map((product) => {
         const value = `$ ${product.price.amount}${(product.price.decimals ? `.${product.price.decimals}` : '')}`;
         return (<Product key={product.id} {...product} value={value} />);
