@@ -14,6 +14,14 @@ const StyledSection = styled.section`
     text-align: center;
     padding: 30px;
   }
+
+  .searchError {
+    padding: 20px;
+    background-color: #fff;
+    border: 1px solid #eee;
+    color: #303577;
+    border-radius: 4px;
+  }
 `;
 
 export default class ProductList extends React.Component {
@@ -31,13 +39,13 @@ export default class ProductList extends React.Component {
       );
     }
 
-    return (this.props.products ? (
+    return (this.props.products && this.props.products.length !== 0 ? (
       this.props.products.map((product) => {
         const value = `$ ${product.price.amount}${(product.price.decimals ? `.${product.price.decimals}` : '')}`;
         return (<Product key={product.id} {...product} value={value} />);
       })
     ) : (
-      <div>
+      <div className="searchError">
         Sua busca não retornou resultados!
       </div>
     ));
