@@ -22,14 +22,17 @@ export default class HomePage extends React.Component {
 
   componentDidUpdate(prevProps, prevState) {
     if (this.state.searchValue !== prevState.searchValue) {
+      this.setState({
+        loading: true,
+      });
+
       axios.get(`http://localhost:4567/api/items?search=${this.state.searchValue}`)
         .then((response) => {
           if (response.data && response.data.length === 1) {
             this.setState({
               products: response.data[0].items,
+              loading: false,
             });
-
-            console.log(response.data[0].items);
           }
         });
     }
@@ -42,7 +45,7 @@ export default class HomePage extends React.Component {
   render() {
     return (<div>
       <Header onSubmit={this.onSubmit} />
-      <ProductList products={this.state.products} />
+      <ProductList products={this.state.products} loading={this.state.loading} />
     </div>);
   }
 }

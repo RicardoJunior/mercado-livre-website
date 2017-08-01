@@ -1,14 +1,19 @@
 import React from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
-
 import { Product } from 'components';
+import loader from './loader.svg';
 
 const StyledSection = styled.section`
   box-sizing: border-box;
   padding: 20px;
   width: 100%;
   margin: 0;
+
+  .loader {
+    text-align: center;
+    padding: 30px;
+  }
 `;
 
 export default class ProductList extends React.Component {
@@ -20,8 +25,8 @@ export default class ProductList extends React.Component {
   getContent() {
     if (this.props.loading) {
       return (
-        <div>
-          Carregando...
+        <div className="loader">
+          <img alt="Carregando" src={loader} />
         </div>
       );
     }
