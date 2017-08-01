@@ -38,6 +38,23 @@ const Article = styled.article`
     font-size: 24px;
     font-family: "Proxima Nova",Helvetica,Arial,sans-serif;
   }
+
+  @media screen and (max-width: 768px) {
+    .image {
+      width: 30%;
+      max-width: 90px;
+      margin-right: 20px;
+    }
+
+    .productInfo p {
+      font-size: 20px;
+      margin-top: 5px;
+    }
+
+    .productInfo a {
+      font-size: 16px;
+    }
+  }
 `;
 
 const Product = ({ id, title, picture, value, cityFrom, ...props }) => {
