@@ -25,6 +25,13 @@ const StyledSection = styled.section`
     margin-top: 120px;
   }
 
+  figure {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: calc(100% - 450px);
+  }
+
   figcaption {
     display: none;
   }
@@ -58,6 +65,31 @@ const StyledSection = styled.section`
 
   .loader {
     text-align: center;
+  }
+
+  .description * {
+    max-width: 100%;
+    height: auto;
+  }
+
+  @media screen and (max-width: 768px) {
+    header {
+      flex-flow: column wrap;
+    }
+
+    header figure,
+    header .productData {
+      width: 100%;
+      max-width: 100%;
+    }
+
+    .productName {
+      font-size: 20px;
+    }
+
+    .productPrice {
+      font-size: 30px;
+    }
   }
 `;
 
@@ -156,7 +188,7 @@ export default class HomePage extends React.Component {
       </header>
       <footer>
         <Heading level={2}>Descrípción del producto</Heading>
-        <Paragraph itemProp="description" dangerouslySetInnerHTML={{ __html: this.state.item.description }} />
+        <Paragraph className="description" itemProp="description" dangerouslySetInnerHTML={{ __html: this.state.item.description }} />
       </footer>
     </article>);
   }
