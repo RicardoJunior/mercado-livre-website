@@ -72,6 +72,11 @@ const StyledSection = styled.section`
     height: auto;
   }
 
+  .description table {
+    max-width: 100%;
+    width: 100%;
+  }
+
   @media screen and (max-width: 768px) {
     header {
       flex-flow: column wrap;
